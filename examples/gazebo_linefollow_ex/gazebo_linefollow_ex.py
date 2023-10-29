@@ -38,6 +38,9 @@ if __name__ == '__main__':
     qlearn = qlearn.QLearn(actions=range(env.action_space.n),
                            alpha=0.2, gamma=0.8, epsilon=0.9)
 
+    '''
+    @brief Load the best policy.
+    '''
     qlearn.loadQ("QValues_A+")
 
     initial_epsilon = qlearn.epsilon
@@ -85,10 +88,16 @@ if __name__ == '__main__':
 
         print("===== Completed episode {}".format(x))
 
+        '''
+        @brief Save the current policy as our best policy if it has a higher reward than the highest reward.
+        '''
         if highest_reward < cumulated_reward:
             highest_reward = cumulated_reward
             qlearn.saveQ("QValues_A+")
 
+        '''
+        @brief Save the current policy every five episodes.
+        '''
         if (x > 0) and (x % 5 == 0):
             qlearn.saveQ("QValues")
             plotter.plot(env)
