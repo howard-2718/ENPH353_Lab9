@@ -120,6 +120,11 @@ class QLearn:
             self.q[(state1, action1)] = 0
         else:
             cur_q = self.getQ(state1, action1)
+
+            for action in self.actions:
+                if self.q.get((state2, action)) is None:
+                    self.q[(state2, action)] = 0
+
             q_max = max([self.getQ(state2, action) for action in self.actions])
 
             self.q[(state1, action1)] = cur_q + self.alpha * (reward + self.gamma * q_max - cur_q)
